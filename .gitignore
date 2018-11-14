@@ -1,0 +1,7 @@
+**/*.swp
+**/*.private
+.terraform
+terraform.tfstate
+terraform.tfvars
+beconf.tfvars
+
