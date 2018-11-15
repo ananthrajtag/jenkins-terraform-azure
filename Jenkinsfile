@@ -1,8 +1,7 @@
 pipeline {
   agent {
-    docker {
-      image 'hashicorp/terraform:light'
-    }
+    node {
+      label 'master' 
   }
   environment {
       ARM_SUBSCRIPTION_ID = credentials('azure-subscription-id')
@@ -12,6 +11,10 @@ pipeline {
       storage_key = credentials('tfstate-storage-key')
   }
   stages {
+  stage('Start docker')
+    steps{
+       sh 'sudo docker run -it hashicorp/terraform:light'
+         }
   stage('Terraform init') {
     steps {
           sh 'id'
