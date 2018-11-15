@@ -2,7 +2,6 @@ pipeline {
   agent {
     docker {
       image 'hashicorp/terraform:light'
-      args '-u root:root'
     }
   }
   environment {
@@ -15,6 +14,7 @@ pipeline {
   stages {
   stage('Terraform init') {
     steps {
+          id
           sh 'rm -rf jenkins-terraform-azure'
           sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
           sh '''
