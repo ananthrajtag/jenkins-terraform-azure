@@ -11,6 +11,7 @@ pipeline {
       ARM_TENANT_ID  = credentials('azure-tenant-id')
       storage_key = credentials('tfstate-storage-key')
   }
+  stages {
   stage('Terraform init') {
     steps {
           sh 'rm -rf jenkins-terraform-azure'
@@ -23,6 +24,7 @@ pipeline {
                                          -backend-config="key=${storage_key}" \
                                          -backend-config="access_key=${storage_key}"
           '''
+      }
     }
   }
 }
