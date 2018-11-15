@@ -2,6 +2,7 @@ pipeline {
   agent {
     docker {
       image 'hashicorp/terraform:light'
+      args '-u root:root'
     }
   }
   environment {
