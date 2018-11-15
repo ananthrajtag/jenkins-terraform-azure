@@ -12,10 +12,11 @@ pipeline {
       storage_key = credentials('tfstate-storage-key')
   }
   stages {
-  stage('Start docker')
-    steps{
+  stage('Start docker') {
+    steps {
        sh 'sudo docker run -it hashicorp/terraform:light'
-         }
+    }
+  }  
   stage('Terraform init') {
     steps {
           sh 'id'
