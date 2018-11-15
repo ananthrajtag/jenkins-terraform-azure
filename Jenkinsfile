@@ -1,7 +1,7 @@
 pipeline {
   agent {
-    node {
-      label 'master' 
+    docker {
+      image 'hashicorp/terraform:light'
     }
   }
   environment {
@@ -12,14 +12,8 @@ pipeline {
       storage_key = credentials('tfstate-storage-key')
   }
   stages {
-  stage('Start docker') {
-    steps {
-       sh 'sudo docker run -it hashicorp/terraform:light'
-    }
-  }  
   stage('Terraform init') {
     steps {
-          sh 'id'
           sh 'rm -rf jenkins-terraform-azure'
           sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
           sh '''
