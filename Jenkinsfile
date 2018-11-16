@@ -12,18 +12,10 @@ pipeline {
       storage_key = credentials('tfstate-storage-key')
   }
   stages {
-  stage('Terraform init') {
+  stage('Terraform test') {
     steps {
-          sh 'rm -rf jenkins-terraform-azure'
-          sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
-          sh '''
-             cd jenkins-terraform-azure
-             terraform init -input=false -backend-config="resource_group_name=tfstate" \
-                                         -backend-config="storage_account_name=tfstate90876" \
-                                         -backend-config="container_name=jenkinstf" \
-                                         -backend-config="key=${storage_key}" \
-                                         -backend-config="access_key=${storage_key}"
-          '''
+          echo 'Hello world'
+          sh 'terraform --version'
       }
     }
   }
