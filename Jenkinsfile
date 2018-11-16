@@ -17,7 +17,7 @@ pipeline {
           sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
           sh '''
              cd jenkins-terraform-azure
-             terraform init -input=false -backend-config="resource_group_name=tfstate" \
+             ${terraform} init -input=false -backend-config="resource_group_name=tfstate" \
                                          -backend-config="storage_account_name=tfstate90876" \
                                          -backend-config="container_name=jenkinstf" \
                                          -backend-config="key=${storage_key}" \
