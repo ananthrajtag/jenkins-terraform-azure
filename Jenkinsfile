@@ -10,19 +10,31 @@ pipeline {
       terraform = 'docker run hashicorp/terraform:light'
   }
   stages {
-  stage('Terraform init') {
-    steps {
-          sh '${terraform} --version'
-          sh 'rm -rf jenkins-terraform-azure'
-          sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
-          sh '''
-             cd jenkins-terraform-azure
-             ${terraform} init -input=false -backend-config="resource_group_name=tfstate" \
-                                         -backend-config="storage_account_name=tfstate90876" \
-                                         -backend-config="container_name=jenkinstf" \
-                                         -backend-config="key=${storage_key}" \
-                                         -backend-config="access_key=${storage_key}"
-          '''
+    stage('Terraform init') {
+      steps {
+            sh '${terraform} --version'
+            sh 'rm -rf jenkins-terraform-azure'
+            sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
+            sh '''
+               cd jenkins-terraform-azure
+               ${terraform} init -input=false -backend-config="resource_group_name=tfstate" \
+                                              -backend-config="storage_account_name=tfstate90876" \
+                                              -backend-config="container_name=jenkinstf" \
+                                              -backend-config="key=${storage_key}" \
+                                              -backend-config="access_key=${storage_key}"
+            '''
+      }
+    }
+    stage('Terraform plan') {
+      steps {
+            sh '''
+               ${terraform} plan -out=tfplan -input=false
+            '''
+            script {
+                  timeout(time: 10, unit: 'MINUTES') {
+                    input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+                  }
+            }
       }
     }
   }
