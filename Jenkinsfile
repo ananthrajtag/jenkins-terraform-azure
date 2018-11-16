@@ -14,7 +14,7 @@ pipeline {
   stage('Terraform test') {
     steps {
           echo 'Hello world'
-          ${terraform} --version
+          ${terraform}
       }
     }
   }
