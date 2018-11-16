@@ -10,11 +10,18 @@ pipeline {
       terraform = 'docker run hashicorp/terraform:light'
   }
   stages {
-  stage('Terraform test') {
+  stage('Terraform init') {
     steps {
+          sh '${terraform} --version'
+          sh 'rm -rf jenkins-terraform-azure'
+          sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
           sh '''
-            echo 'Hello world'
-            ${terraform} --version
+             cd jenkins-terraform-azure
+             terraform init -input=false -backend-config="resource_group_name=tfstate" \
+                                         -backend-config="storage_account_name=tfstate90876" \
+                                         -backend-config="container_name=jenkinstf" \
+                                         -backend-config="key=${storage_key}" \
+                                         -backend-config="access_key=${storage_key}"
           '''
       }
     }
