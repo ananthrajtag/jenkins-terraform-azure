@@ -6,7 +6,7 @@ pipeline {
       ARM_CLIENT_ID = credentials('client-id-jenkins-sp')
       ARM_CLIENT_SECRET = credentials('client-secret-jenkins-sp')
       ARM_TENANT_ID  = credentials('azure-tenant-id')
-      terraform = 'docker run -it hashicorp/terraform:light'
+      terraform = 'docker run hashicorp/terraform:light'
   }
   stages {
   stage('Terraform test') {
