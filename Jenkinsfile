@@ -13,7 +13,7 @@ pipeline {
     steps {
           sh '''
             echo 'Hello world'
-            ${terraform}
+            ${terraform} --version
           '''
       }
     }
