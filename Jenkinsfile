@@ -7,16 +7,12 @@ pipeline {
       ARM_CLIENT_SECRET = credentials('client-secret-jenkins-sp')
       ARM_TENANT_ID  = credentials('azure-tenant-id')
       storage_key = credentials('tfstate-storage-key')
-      terraform = 'docker run -v /var/lib/jenkins/workspace/TerraformAzure:/var/lib/jenkins/workspace/TerraformAzure:rw,z -v /var/lib/jenkins/workspace/TerraformAzure@tmp:/var/lib/jenkins/workspace/TerraformAzure@tmp:rw,z hashicorp/terraform:light'
+      terraform = 'docker run -v /var/lib/jenkins/workspace/TerraformAzure:/var/lib/jenkins/workspace/TerraformAzure:rw,z hashicorp/terraform:light'
   }
   stages {
     stage('Terraform init') {
       steps {
-            sh '${terraform} --version'
-            sh 'rm -rf jenkins-terraform-azure'
-            sh 'git clone https://github.com/gbpeva3/jenkins-terraform-azure.git'
             sh '''
-               cd jenkins-terraform-azure
                ${terraform} init -input=false -backend-config="resource_group_name=tfstate" \
                                               -backend-config="storage_account_name=tfstate90876" \
                                               -backend-config="container_name=jenkinstf" \
