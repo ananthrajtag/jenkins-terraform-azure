@@ -1,7 +1,6 @@
 pipeline {
-  agent {
-     any
-  }
+  agent any
+  
   environment {
       ARM_SUBSCRIPTION_ID = credentials('azure-subscription-id')
       ARM_CLIENT_ID = credentials('client-id-jenkins-sp')
