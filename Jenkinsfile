@@ -12,8 +12,10 @@ pipeline {
   stages {
   stage('Terraform test') {
     steps {
-          echo 'Hello world'
-          ${terraform}
+          sh '''
+            echo 'Hello world'
+            ${terraform}
+          '''
       }
     }
   }
