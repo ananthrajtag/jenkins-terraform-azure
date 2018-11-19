@@ -28,7 +28,7 @@ pipeline {
     stage('Terraform plan') {
       steps {
             sh '''
-               ${terraform} plan -var-file="/var/lib/jenkins/workspace/TerraformAzure/extra-vars.tf" -out=tfplan -input=false
+               ${terraform} plan -var-file="/var/lib/jenkins/workspace/TerraformAzure/extra-vars.tfvars" -out=tfplan -input=false
             '''
             script {
                   timeout(time: 10, unit: 'MINUTES') {
