@@ -37,11 +37,12 @@ pipeline {
             }
       }
     }
-    stage('apply') {
+    stage('Terraform apply') {
       steps {
             sh  '''
                 ${terraform} apply -lock=false -input=false tfplan
             '''
       }
     }
+  }
 }
