@@ -6,11 +6,12 @@ pipeline {
   }
 
   environment {
-      ARM_SUBSCRIPTION_ID = credentials('azure-subscription-id')
-      ARM_CLIENT_ID = credentials('client-id-jenkins-sp')
-      ARM_CLIENT_SECRET = credentials('client-secret-jenkins-sp')
-      ARM_TENANT_ID  = credentials('azure-tenant-id')
-      storage_key = credentials('tfstate-storage-key')
+      ARM_SUBSCRIPTION_ID = 175f0376-6221-48ff-947b-37005e74e5df
+      ARM_TENANT_ID = a9399ad9-9fae-4cec-8be1-f084721150cd
+      ARM_CLIENT_ID = 4c67f96e-d383-46c3-8c07-b9837c3fa0f9
+      ARM_CLIENT_SECRET = f213c981-95e5-4406-bb67-cc18b09ae5bf
+
+      storage_key =
       terraform = 'docker run -v /var/lib/jenkins/workspace/TerraformAzure:/var/lib/jenkins/workspace/TerraformAzure:rw,z -w /app -v /var/lib/jenkins/workspace/TerraformAzure:/app hashicorp/terraform:light'
   }
   stages {
@@ -28,7 +29,7 @@ pipeline {
     stage('Terraform plan') {
       steps {
             sh '''
-               set +x
+               export ARM_SUBSCRIPTION_ID ARM_TENANT_ID ARM_CLIENT_ID ARM_CLIENT_SECRET
                echo $ARM_SUBSCRIPTION_ID $ARM_TENANT_ID $ARM_CLIENT_ID $ARM_CLIENT_SECRET
                ${terraform} plan -out=tfplan -input=false
             '''
