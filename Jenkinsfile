@@ -29,6 +29,7 @@ pipeline {
       steps {
             sh '''
                export ARM_SUBSCRIPTION_ID ARM_TENANT_ID ARM_CLIENT_ID ARM_CLIENT_SECRET
+               echo $ARM_SUBSCRIPTION_ID $ARM_TENANT_ID $ARM_CLIENT_ID $ARM_CLIENT_SECRET
                ${terraform} plan -out=tfplan -input=false
             '''
             script {
