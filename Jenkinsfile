@@ -13,6 +13,7 @@ pipeline {
     stage('Terraform init') {
       steps {
             sh '''
+               echo ${storage_key}
                ${terraform} init -input=false -backend-config="resource_group_name=tfstate" \
                                               -backend-config="storage_account_name=tfstate90876" \
                                               -backend-config="container_name=jenkinstf" \
