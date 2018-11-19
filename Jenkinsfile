@@ -4,14 +4,14 @@ pipeline {
           label 'master'
       }
   }
-  
+
   environment {
       ARM_SUBSCRIPTION_ID = credentials('azure-subscription-id')
       ARM_CLIENT_ID = credentials('client-id-jenkins-sp')
       ARM_CLIENT_SECRET = credentials('client-secret-jenkins-sp')
       ARM_TENANT_ID  = credentials('azure-tenant-id')
       storage_key = credentials('tfstate-storage-key')
-      terraform = 'docker run -v /var/lib/jenkins/workspace/TerraformAzure:/var/lib/jenkins/workspace/TerraformAzure:rw,z hashicorp/terraform:light'
+      terraform = 'docker run -v /var/lib/jenkins/workspace/TerraformAzure:/var/lib/jenkins/workspace/TerraformAzure:rw,z -w /app hashicorp/terraform:light'
   }
   stages {
     stage('Terraform init') {
