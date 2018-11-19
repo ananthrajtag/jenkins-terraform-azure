@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+      node {
+          label 'master'
+      }
+  }
   
   environment {
       ARM_SUBSCRIPTION_ID = credentials('azure-subscription-id')
