@@ -38,4 +38,16 @@ resource "azurerm_network_security_group" "ssh" {
     destination_address_prefix = "*"
   }
 
+  security_rule {
+    name                       = "HTTPS"
+    priority                   = 110
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "217.33.210.119"
+    destination_address_prefix = "*"
+  }
+
 }
