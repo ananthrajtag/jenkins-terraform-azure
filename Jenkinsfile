@@ -10,7 +10,10 @@ pipeline {
       tenant_id = credentials('phils_tenant')
       client_id = credentials('phils-client')
       client_secret = credentials('phils-secret')
-      storage_key = credentials('tfstate-storage-key')
+      tfstate_rg = "tfstate"
+      tfstate_sa = "tfstate90876"
+      tfstate_sa_key = credentials('tfstate-storage-key')
+      tfstate_container = "jenkinstf"
   }
   stages {
     stage('Terraform init') {
@@ -24,11 +27,11 @@ pipeline {
                           -e ARM_CLIENT_ID="${client_id}" \
                           -e ARM_CLIENT_SECRET="${client_secret}" \
                           hashicorp/terraform:light \
-                          init -input=false -backend-config="resource_group_name=tfstate" \
-                                            -backend-config="storage_account_name=tfstate90876" \
-                                            -backend-config="container_name=jenkinstf" \
-                                            -backend-config="key=${storage_key}" \
-                                            -backend-config="access_key=${storage_key}"
+                          init -input=false -backend-config="resource_group_name=${tfstate_rg}" \
+                                            -backend-config="storage_account_name=${tfstate_sa}" \
+                                            -backend-config="container_name=${tfstate_container}" \
+                                            -backend-config="key=${tfstate_sa_key}" \
+                                            -backend-config="access_key=${tfstate_sa_key}"
             '''
       }
     }
