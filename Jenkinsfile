@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage('Terraform init') {
       environment {
-        
+        anyvar = "hello"
       }
       steps {
             sh '''
