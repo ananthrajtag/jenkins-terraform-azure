@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Terraform init') {
       environment {
-        test_var = $storage_key
+        test_var = ${storage_key}
       }
       steps {
             sh '''
