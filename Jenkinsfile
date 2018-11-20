@@ -6,10 +6,10 @@ pipeline {
   }
 
   environment {
-      subscription_id = credentials('phils-subscription')
-      tenant_id = credentials('phils_tenant')
-      client_id = credentials('phils-client')
-      client_secret = credentials('phils-secret')
+      subscription_id = credentials('azure-subscription-id')
+      tenant_id = credentials('azure-tenant-id')
+      client_id = credentials('client-id-jenkins-sp')
+      client_secret = credentials('client-secret-jenkins-sp')
       tfstate_rg = "tfstate"
       tfstate_sa = "tfstate90876"
       tfstate_sa_key = credentials('tfstate-storage-key')
@@ -50,7 +50,7 @@ pipeline {
             '''
             script {
                   timeout(time: 10, unit: 'MINUTES') {
-                    input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+                    input(id: "Deploy Gate", message: "Apply ${params.project_name}?", ok: 'Apply')
                   }
             }
       }
