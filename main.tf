@@ -30,7 +30,7 @@ resource "azurerm_network_security_group" "ssh" {
     name                       = "SSH"
     priority                   = 100
     direction                  = "Inbound"
-    access                     = "Allow"
+    access                     = "Deny"
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
