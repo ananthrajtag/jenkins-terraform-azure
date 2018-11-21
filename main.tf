@@ -1,3 +1,7 @@
+locals {
+  prefix = "${concat(var.env-type, var.env-number)}"
+}
+
 module "network" {
   source              = "Azure/network/azurerm"
   resource_group_name = "${var.prefix}-rg"
