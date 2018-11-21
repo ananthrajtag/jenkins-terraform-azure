@@ -1,17 +1,13 @@
-locals {
-  prefix = "${concat(var.env-type, var.env-number)}"
-}
-
 module "network" {
   source              = "Azure/network/azurerm"
-  resource_group_name = "${var.prefix}-rg"
+  resource_group_name = "${var.env-type}${var.prefix}-rg"
   location            = "${var.location}"
   address_space       = "10.20.0.0/16"
   subnet_prefixes     = ["10.20.10.0/24", "10.20.20.0/24", "10.20.30.0/24"]
   subnet_names        = ["subnet1", "subnet2", "subnet3"]
 
   tags = {
-    environment = "${var.prefix}"
+    environment = "${var.env-type}"
     costcenter  = "${var.costcenter}"
   }
 }
@@ -19,7 +15,7 @@ module "network" {
 resource "azurerm_subnet" "subnet" {
   name  = "subnet1"
   address_prefix = "10.20.10.0/24"
-  resource_group_name = "${var.prefix}-rg"
+  resource_group_name = "${var.env-type}${var.prefix}-rg"
   virtual_network_name = "acctvnet"
   network_security_group_id = "${azurerm_network_security_group.ssh.id}"
 }
@@ -28,7 +24,7 @@ resource "azurerm_network_security_group" "ssh" {
   depends_on          = ["module.network"]
   name                = "ssh"
   location            = "${var.location}"
-  resource_group_name = "${var.prefix}-rg"
+  resource_group_name = "${var.env-type}${var.prefix}-rg"
 
   security_rule {
     name                       = "SSH"
