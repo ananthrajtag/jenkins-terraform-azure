@@ -3,7 +3,7 @@ variable "env-type" {
 }
 
 variable "prefix" {
-  default = "-env-02"
+  default = "999"
 }
 
 variable "location" {
